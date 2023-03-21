@@ -1,2 +1,2 @@
 # Black-Jack
-A card game made in Python
+A cards game made in Python 3
