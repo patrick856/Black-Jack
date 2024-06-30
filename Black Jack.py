@@ -4,7 +4,10 @@ import time
 
 moves = ["Stand","Hit","Double down","Surrender","Spilt"]
 money = 10000
-
+deck1 = set()
+deck2 = set()
+card_count = 0
+    
 while True:
     split_1 = True
     split_2 = True
@@ -32,9 +35,24 @@ while True:
             return f"{self.rank} {self.suit}"
 
     def new_card(hidden):
+        global card_count
         card = Card(hidden)
+        if card in deck1:
+            if card in deck2:
+                return new_card(hidden)
+            card_count += 1
+            deck2.add(card)
+            return card
+        card_count += 1
+        deck1.add(card)
         return card
 
+    def shuffle_decks():
+        print("----- shuffling decks -----")
+        deck1 = set()
+        deck2 = set()
+        card_count = 0
+    
     def update_screen():
         print("dealer\n")
         for i in dealer_cards:
@@ -74,8 +92,6 @@ while True:
                 split_no = 2
                 time.sleep(2)
                 bet *= 2
-                player_turn()
-                return
             else:
                 print("------- BJ -------")
                 bet *= 2
@@ -121,7 +137,7 @@ while True:
         print("")
         for i in range(0,x):
             print(str(i+1) + ") " + moves[i])
-
+        choice = 1
         try:
             choice = int(input())
             if choice < 1 or choice > x:
@@ -210,7 +226,7 @@ while True:
         win_or_lose()        
 
     def split_option():
-        if len(player_cards) == 2 and player_cards[0].value == player_cards[1].value:
+        if len(player_cards) == 2 and player_cards[0].value == player_cards[1].value and money >= 2*bet:
             return True
         return False
 
@@ -273,20 +289,15 @@ while True:
                     return x
         return x
 
-
+    if card_count > 94:
+        shuffle_decks()
     player_cards.append(new_card(False))
     player_cards.append(new_card(False))
     dealer_cards.append(new_card(False))
     dealer_cards.append(new_card(True))
     place_bet()
     player_turn()
-    print("Play again?\n1) Yes\n2) No")
-    try:
-        choice = int(input())
-        if choice != 1:
-            break
-        if money == 0:
-            print("You cant play no more")
-            break
-    except:
-        continue
+    if money == 0:
+        print("You cant play no more")
+        break
+            
