@@ -48,6 +48,7 @@ while True:
         return card
 
     def shuffle_decks():
+        global card_count
         print("----- shuffling decks -----")
         deck1 = set()
         deck2 = set()
@@ -207,7 +208,14 @@ while True:
                 if total_value(player_cards_split) == 21:
                     bet2 = 0
         if total_value(dealer_cards) > 21:
-            player_won(bet + bet2)
+            if total_value(player_cards) < 21:
+                player_won(bet)
+            else:
+                player_lost(bet)
+            if total_value(player_cards_split) < 21 and split:
+                player_won(bet2)
+            elif split:
+                player_lost(bet2)
             return
         if total_value(dealer_cards) < 17:
             if split:
