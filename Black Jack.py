@@ -208,11 +208,11 @@ while True:
                 if total_value(player_cards_split) == 21:
                     bet2 = 0
         if total_value(dealer_cards) > 21:
-            if total_value(player_cards) < 21:
+            if total_value(player_cards) <= 21:
                 player_won(bet)
             else:
                 player_lost(bet)
-            if total_value(player_cards_split) < 21 and split:
+            if total_value(player_cards_split) <= 21 and split:
                 player_won(bet2)
             elif split:
                 player_lost(bet2)
