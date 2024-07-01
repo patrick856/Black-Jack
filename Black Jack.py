@@ -36,19 +36,23 @@ while True:
 
     def new_card(hidden):
         global card_count
+        global deck1
+        global deck2
         card = Card(hidden)
-        if card in deck1:
-            if card in deck2:
+        if str(card) in deck1:
+            if str(card) in deck2:
                 return new_card(hidden)
             card_count += 1
-            deck2.add(card)
+            deck2.add(str(card))
             return card
         card_count += 1
-        deck1.add(card)
+        deck1.add(str(card))
         return card
 
     def shuffle_decks():
         global card_count
+        global deck1
+        global deck2
         print("----- shuffling decks -----")
         deck1 = set()
         deck2 = set()
