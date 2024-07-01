@@ -93,6 +93,8 @@ while True:
                 split_no = 2
                 time.sleep(2)
                 bet *= 2
+                player_turn()
+                return
             else:
                 print("------- BJ -------")
                 bet *= 2
